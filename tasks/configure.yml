@@ -1,0 +1,8 @@
+- name: Copy config file vector.yaml
+  become: true
+  ansible.builtin.template:
+    src: "vector.yaml.j2"
+    dest: "/etc/vector/vector.yaml"
+    mode: "0644"
+    backup: true
+  notify: vector_restart

@@ -1,0 +1,13 @@
+---
+# tasks file for vector
+- include_tasks: 
+    file: install.yml
+    apply:
+      tags: vector
+  tags: vector
+
+- include_tasks:
+    file: configure.yml
+    apply:
+      tags: vector
+  tags: vector
