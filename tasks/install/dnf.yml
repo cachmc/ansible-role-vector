@@ -4,16 +4,11 @@
          vector-{{ vector_version }}-1.x86_64.rpm"
     dest: "/tmp/vector-{{ vector_version }}-1.x86_64.rpm"
     mode: "0644"
+    validate_certs: false
 
-- name: Install vector packages
-  become: true
-  ansible.builtin.yum:
+- name: Install vector package
+  become: "{{ true if 'sudo' in ansible_facts.packages else false }}"
+  ansible.builtin.dnf:
     name: /tmp/vector-{{ vector_version }}-1.x86_64.rpm
+    state: present
     disable_gpg_check: true
-  notify: vector_restart
-
-- name: Enable vector service
-  become: true
-  ansible.builtin.systemd:
-    name: vector
-    enabled: true

@@ -1,6 +1,6 @@
 # ansible-vector
 
-[Скачивает](https://yum.vector.dev/stable/vector-0/x86_64/), устанавливает *rpm* пакет и создает демонстрационный конфигурационный файл для интеграции c *ClickHouse*.
+Производит установку и настройку утилиты [Vector](https://vector.dev/)
 
 <br>
 <br>
@@ -9,17 +9,38 @@
 
 ## Переменные
 
-|  Название  |  Значение по умолчанию  |  Описание  |
-|  :--:  |  :--:  |  :--:  |
-| *vector_version*  |  0.42.0  |  Версия пакета  |
-| *vector_ch_address*  |  127.0.0.1  |  Адрес подключения к *ClickHouse*  |
-| *vector_ch_port*  |  8123  |  Порт подключения к *ClickHouse*  |
-| *vector_ch_db_name*  |  db_example  |  Имя БД в *ClickHouse*  |
-| *vector_ch_table_name*  |  table_example  |  Имя таблицы для записи логов в *ClickHouse*  |
+ - Вы можете указать версию пакета *Vector*
+```yaml
+vector_version: "0.42.0"
+```
+
+<br>
+
+ - Вы можете создать любое количество конфигурационных файлов *Vector*
+```yaml
+vector_configs_add:
+  default: "{{ lookup('template', ./templates/default.yaml.j2') }}"
+  clickhouse: "{{ lookup('template', ./templates/clickhouse.yaml.j2') }}"
+  zabbix: "{{ lookup('template', ./templates/zabbix.yaml.j2') }}"
+```
+Ключ это название будущего конфигурационного файла, а значение - функция которая формирует содержимое конфигурационного файла из *Jinja* шаблона по указанному пути.
+
+<br>
+
+ - Вы можете удалить уже созданные ранее конфигурационные файлы *Vector*
+```yaml
+vector_configs_del:
+  - default
+  - clickhouse
+  - zabbix
+  ...
+```
 
 <br>
 <br>
 
 ## Теги
 
-Поддерживает тег *vector* для возможности запустить только эту роль в playbook.
+|  Название  |  Описание  |
+|  :--:  |  :---  |
+| *vector*  |  Позволяет запустить целиком роль в playbook  |

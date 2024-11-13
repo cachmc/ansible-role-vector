@@ -2,7 +2,7 @@
 # defaults file for vector
 vector_version: "0.42.0"
 
-vector_ch_address: "127.0.0.1"
-vector_ch_port: "8123"
-vector_ch_db_name: "db_example"
-vector_ch_table_name: "table_example"
+vector_configs_add:
+  default: "{{ lookup('template', './templates/default.yaml.j2') }}"
+  
+vector_configs_del: []
